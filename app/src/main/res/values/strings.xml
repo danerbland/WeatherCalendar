@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">WeatherCalendar</string>
+    <string name="action_settings">Settings</string>
+    <string name="OpenWeatherMaps_API_Key">Some String</string>
+
+    <string name="test_country_code">us</string>
+</resources>
