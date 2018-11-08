@@ -164,8 +164,6 @@ public class MainActivity extends AppCompatActivity implements
         //If we have reached this point, we were granted permissions and need to continue with our loading.
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        //TODO after the weather data is loaded, initialize the loader.
-
         //If our forecast is null, load it from the database.
         if(mData == null) {
             LoaderManager.LoaderCallbacks<ArrayList<ForecastChunk>> callback = MainActivity.this;
@@ -278,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements
 
                     //If The Database is Empty
                     if(mData == null || mData.size() == 0){
-                        Log.e(TAG, "Database is currently empty");
+                        Log.d(TAG, "Database is currently empty");
                         LocationSyncTask.syncLocationAndWeather(getContext());
                 }
                 return  mData;
@@ -291,7 +289,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onLoadFinished(@NonNull Loader<ArrayList<ForecastChunk>> loader, ArrayList<ForecastChunk> forecastChunks) {
         //Initialize the calendar Fragment
-        Log.e(TAG, "onLoadFinished fired");
+        Log.d(TAG, "onLoadFinished fired");
 
     }
 

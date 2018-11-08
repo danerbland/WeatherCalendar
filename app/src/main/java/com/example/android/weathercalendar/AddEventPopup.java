@@ -272,7 +272,7 @@ public class AddEventPopup extends Activity {
                             mEndDateCalendar.getTimeInMillis(), description,
                             CalendarUtils.getWeatherCalendarId(getApplicationContext()), TimeZone.getDefault().getDisplayName());
                 } else{
-                    Log.e(TAG, "Updating Event: " + mEventId);
+                    Log.d(TAG, "Updating Event: " + mEventId);
                     CalendarUtils.updateEvent(getApplicationContext(), mEventId, description, mStartDateCalendar.getTimeInMillis(), mEndDateCalendar.getTimeInMillis());
                 }
 

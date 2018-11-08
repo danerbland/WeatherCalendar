@@ -61,7 +61,6 @@ public class DayDetailActivity extends AppCompatActivity
             mForecastChunks = getIntent().getParcelableArrayListExtra(getString(R.string.forecast_bundle_key));
         }
 
-        //TODO set title to city
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Initialize FAB
@@ -75,7 +74,6 @@ public class DayDetailActivity extends AppCompatActivity
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(mYear, mMonth, mDay);
 
-                Log.e(TAG, Long.toString(calendar.getTimeInMillis()));
                 intentToStartAddEventPopup.putExtra(getString(R.string.event_extras_Start_Date_key), calendar.getTimeInMillis());
                 intentToStartAddEventPopup.putExtra(getString(R.string.event_extras_End_Date_key), calendar.getTimeInMillis());
                 intentToStartAddEventPopup.putExtra(getString(R.string.event_extras_id_key), -1);
@@ -123,7 +121,7 @@ public class DayDetailActivity extends AppCompatActivity
         entries.observe(this, new Observer<List<WeatherEntry>>() {
             @Override
             public void onChanged(@Nullable List<WeatherEntry> weatherEntries) {
-                Log.e(TAG, "Observer onChanged Fired");
+                Log.d(TAG, "Observer onChanged Fired");
                 ArrayList<ForecastChunk> chunks = new ArrayList<>();
                 for(WeatherEntry entry: weatherEntries){
                     chunks.add(new ForecastChunk(

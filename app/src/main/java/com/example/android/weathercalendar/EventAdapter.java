@@ -64,13 +64,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventAdapter
             Calendar calendar = Calendar.getInstance();
             mCursor.moveToPosition(position);
             calendar.setTimeInMillis(mCursor.getLong(mCursor.getColumnIndex(CalendarContract.Events.DTSTART)));
-            Log.e(TAG, "To Start, calendar.getTimeInMillis()  " + calendar.getTimeInMillis());
             holder.mEventTime.setText(CalendarUtils.getTimeString(calendar));
             holder.mDescriptionTextView.setText(mCursor.getString(mCursor.getColumnIndex(CalendarContract.Events.TITLE)));
 
             //If we have forecast information, find the chunk with the closest time to the event's start.
             if(mForecastChunks != null && mForecastChunks.size()!=0){
-                Log.e(TAG, "mForecastChunks are Not Null");
 
                 long shortestTime = DAY_IN_MILLISECONDS;
                 int closestIndex = -1;
@@ -79,7 +77,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventAdapter
                 for(int j = 0; j < mForecastChunks.size(); j ++){
                     if(Math.abs(calendar.getTimeInMillis() - (mForecastChunks.get(j).getmDate()*1000L)) <=  shortestTime){
                         shortestTime = calendar.getTimeInMillis() - (mForecastChunks.get(j).getmDate()*1000L);
-                        Log.e(TAG, "Closest Index: " + closestIndex);
                         closestIndex = j;
                     }
                 }
@@ -112,7 +109,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventAdapter
         if(mCursor != null){
             return mCursor.getCount();
         }else {
-            Log.e(TAG, "mCursor = null");
+            Log.d(TAG, "mCursor = null");
             return 0;
         }
     }
@@ -140,14 +137,12 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventAdapter
         @Override
         public void onClick(View v) {
 
-            Log.e(TAG, "Event was Clicked");
 
             int position = getAdapterPosition();
             mCursor.moveToPosition(position);
 
             Intent intentToStartAddEventScreen = new Intent(mContext,AddEventPopup.class);
             intentToStartAddEventScreen.putExtra(mContext.getString(R.string.event_extras_id_key), mCursor.getString(mCursor.getColumnIndex(CalendarContract.Events._ID)));
-            Log.e(TAG, "Putting event Id Extra in: " + mCursor.getString(mCursor.getColumnIndex(CalendarContract.Events._ID)));
             intentToStartAddEventScreen.putExtra(mContext.getString(R.string.event_extras_Start_Date_key), mCursor.getLong(mCursor.getColumnIndex(CalendarContract.Events.DTSTART)));
             intentToStartAddEventScreen.putExtra(mContext.getString(R.string.event_extras_End_Date_key), mCursor.getLong(mCursor.getColumnIndex(CalendarContract.Events.DTEND)));
             intentToStartAddEventScreen.putExtra(mContext.getString(R.string.event_extras_Title_key), mCursor.getString(mCursor.getColumnIndex(CalendarContract.Events.TITLE)));

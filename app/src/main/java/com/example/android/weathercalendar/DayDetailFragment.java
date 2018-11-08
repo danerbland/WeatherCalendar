@@ -100,7 +100,7 @@ public class DayDetailFragment extends Fragment implements EventAdapter.EventOnC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-            Log.e(TAG, "inflating Rootview");
+            Log.d(TAG, "inflating Rootview");
             // Inflate the layout for this fragment
             final View rootView = inflater.inflate(R.layout.fragment_day_detail, container, false);
 
@@ -142,7 +142,7 @@ public class DayDetailFragment extends Fragment implements EventAdapter.EventOnC
     @Override
     public void onResume() {
 
-        Log.e(TAG, "onResume Fired!");
+        Log.d(TAG, "onResume Fired!");
         //on Resume, we may need to update our Event RecyclerView with new events.
         ArrayList<ForecastChunk> dayChunks = getDayChunks();
         mEventCursor = CalendarUtils.queryEventsFromEventTable(getContext(), mDayCalendar.getTimeInMillis(), mDayCalendar.getTimeInMillis() + DAY_IN_MILLISECONDS);
@@ -260,7 +260,6 @@ public class DayDetailFragment extends Fragment implements EventAdapter.EventOnC
                 if(!mForecastIsHidden) {
                     if (mHasForecast) {
                         mForecastRecyclerView.setVisibility(View.GONE);
-                        //TODO fix this so that the Events label moves up
                     } else {
                         rootView.findViewById(R.id.textview_no_forecast_message).setVisibility(View.GONE);
                     }
@@ -268,7 +267,6 @@ public class DayDetailFragment extends Fragment implements EventAdapter.EventOnC
                 } else{
                     if (mHasForecast) {
                         mForecastRecyclerView.setVisibility(View.VISIBLE);
-                        //TODO fix this so that the Events label moves up
                     } else {
                         rootView.findViewById(R.id.textview_no_forecast_message).setVisibility(View.VISIBLE);
                     }

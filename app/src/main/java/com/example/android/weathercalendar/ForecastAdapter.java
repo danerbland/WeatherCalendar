@@ -45,7 +45,6 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
     public void onBindViewHolder(@NonNull ForecastAdapterViewHolder holder, int position) {
         if(mForecastChunks != null){
             ForecastChunk chunk = mForecastChunks.get(position);
-            //TODO update this with correct time?
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(chunk.getmDate() * 1000L);
 

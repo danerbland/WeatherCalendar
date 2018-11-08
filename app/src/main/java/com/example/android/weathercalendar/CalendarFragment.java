@@ -122,7 +122,7 @@ public class CalendarFragment extends Fragment {
     }
 
     private void initializemCalendar(CalendarView view){
-        Log.e(TAG, "InitializemCalendar fired");
+        Log.d(TAG, "InitializemCalendar fired");
 
         try {
             view.setDate(mCalendar);
@@ -144,7 +144,7 @@ public class CalendarFragment extends Fragment {
     }
 
     private void addWeatherIconsToCalendar(CalendarView view){
-        Log.e(TAG, "addWeatherIconsToCalendar fired");
+        Log.d(TAG, "addWeatherIconsToCalendar fired");
         if(mForecastChunks != null && mForecastChunks.size()!=0){
             List<EventDay> events = new ArrayList<>();
                for(ForecastChunk chunk:mForecastChunks){
@@ -155,7 +155,7 @@ public class CalendarFragment extends Fragment {
                    }
 
             }
-            Log.e(TAG, "Setting Events");
+            Log.d(TAG, "Setting Events");
             view.setEvents(events);
         }
     }

@@ -69,7 +69,6 @@ public class WeatherCalendarWidget extends AppWidgetProvider {
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             views.setOnClickPendingIntent(R.id.linearlayout_widget_container, pendingIntent);
         }
-        //TODO put year, month, day, and ForecastChunks
 
 
         // Instruct the widget manager to update the widget
@@ -79,9 +78,7 @@ public class WeatherCalendarWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(final Context context, final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
 
-        //TODO input the logic here to update the widget
-
-        Log.e(TAG, "onUpdate Fired");
+        Log.d(TAG, "onUpdate Fired");
 
         final AppDatabase mDb = AppDatabase.getInstance(context);
 
@@ -96,7 +93,7 @@ public class WeatherCalendarWidget extends AppWidgetProvider {
         final Cursor cursor = CalendarUtils.queryEventsFromEventTable(context.getApplicationContext(), today.getTimeInMillis(), monthFromToday.getTimeInMillis());
 
 
-        Log.e(TAG, "looking for events between " + today.getTimeInMillis() + " and " + monthFromToday.getTimeInMillis());
+        Log.d(TAG, "looking for events between " + today.getTimeInMillis() + " and " + monthFromToday.getTimeInMillis());
         if(cursor != null && cursor.getCount() > 0){
             Log.e(TAG, "Event FOUND!");
 
@@ -140,10 +137,6 @@ public class WeatherCalendarWidget extends AppWidgetProvider {
 
                             if(Math.abs((chunk.getmDate() * 1000L) - cursor.getLong(cursor.getColumnIndex(CalendarContract.Events.DTSTART))) <= oneAndAHalfHoursInMillis){
 
-                                Log.e(TAG, "looking at some weather data: chunk time = " + chunk.getmDate() * 1000L + " and cursor data = " + cursor.getLong(cursor.getColumnIndex(CalendarContract.Events.DTSTART)));
-                                Log.e(TAG, "Here is the difference: " + ((chunk.getmDate() * 1000L) - cursor.getLong(cursor.getColumnIndex(CalendarContract.Events.DTSTART))));
-
-
                                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
                                 String tempString;
                                 if(sp.getString(context.getString(R.string.pref_units_key), context.getString(R.string.pref_units_imperial)).matches(context.getString(R.string.pref_units_imperial))){
@@ -179,16 +172,12 @@ public class WeatherCalendarWidget extends AppWidgetProvider {
                 }
             }.execute();
 
-            //TODO get the forecast ID for the event in question.
-            //TODO update get the event title and Date/Time string for the first item in the cursor
-            //TODO pass this all in to "updateWidgets
-            //TODO extract this to a service.
         }//End If we have Cursor
 
         // There may be multiple widgets active, so update all of them
         //If there is no cursor or no event information, load an empty widget
         else for (int appWidgetId : appWidgetIds) {
-            Log.e(TAG, "NO EVENT FOUND");
+            Log.d(TAG, "NO EVENT FOUND");
             updateAppWidget(context, appWidgetManager, appWidgetId, 0, "No Event", -1, null, "", "");
         }
     }

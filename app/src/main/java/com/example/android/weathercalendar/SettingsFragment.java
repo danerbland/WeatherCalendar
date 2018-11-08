@@ -100,7 +100,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
         //If the user puts in a new location manually.
         else if (key.equals(getString(R.string.pref_location_edittext_key))) {
-            Log.e(TAG, "Location Key Changed");
+            Log.d(TAG, "Location Key Changed");
             Geocoder geocoder = new Geocoder(getContext());
             try {
                 List<Address> locations = geocoder.getFromLocationName(sharedPreferences.getString(getString(R.string.pref_location_edittext_key), "New York, NY"), 1);
@@ -111,8 +111,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                     editor.putFloat(getString(R.string.pref_location_latitude_key), Float.valueOf(Double.toString(locations.get(0).getLatitude())));
                     editor.putFloat(getString(R.string.pref_location_longitude_key), Float.valueOf(Double.toString(locations.get(0).getLongitude())));
 
-                    Log.e(TAG, "Location Latitude: " + Double.toString(locations.get(0).getLatitude()));
-                    Log.e(TAG, "Location Longitude: " + Double.toString(locations.get(0).getLongitude()));
+                    Log.d(TAG, "Location Latitude: " + Double.toString(locations.get(0).getLatitude()));
+                    Log.d(TAG, "Location Longitude: " + Double.toString(locations.get(0).getLongitude()));
 
                     editor.commit();
                     Intent intentToSyncImmediately = new Intent(getContext(), WeatherSyncIntentService.class);
@@ -132,7 +132,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
         } else if (key.equals(getString(R.string.pref_units_key))) {
             if(activity.getClass().getSimpleName().matches(DayDetailActivity.class.getSimpleName())){
-                Log.e(TAG, "Units changed from Day Detail Screen");
+                Log.d(TAG, "Units changed from Day Detail Screen");
                 startActivity(activity.getIntent());
             }
         }
