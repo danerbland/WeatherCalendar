@@ -1,5 +1,6 @@
 package com.example.android.data;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -13,7 +14,10 @@ import java.util.List;
 public interface WeatherDao {
 
     @Query("SELECT * FROM weather ORDER BY id")
-    List<WeatherEntry> loadForecast();
+    LiveData<List<WeatherEntry>> loadForecast();
+
+    @Query("SELECT * FROM weather ORDER BY id")
+    List<WeatherEntry> loadWeatherEntryList();
 
     @Insert
     void insertWeatherEntry(WeatherEntry weatherEntry);

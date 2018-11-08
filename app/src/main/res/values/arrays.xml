@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="pref_units_options">
+        <item>@string/pref_units_label_metric</item>
+        <item>@string/pref_units_label_imperial</item>
+    </string-array>
+
+    <string-array name="pref_units_values">
+        <item>@string/pref_units_metric</item>
+        <item>@string/pref_units_imperial</item>
+    </string-array>
+
+
+    <integer-array name="pref_sync_values">
+        <item>@string/pref_sync_24</item>
+        <item>@string/pref_sync_12</item>
+        <item>@string/pref_sync_6</item>
+        <item>@string/pref_sync_3</item>
+        <item>@string/pref_sync_none</item>
+    </integer-array>
+</resources>

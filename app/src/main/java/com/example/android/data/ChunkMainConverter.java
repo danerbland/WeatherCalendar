@@ -17,7 +17,7 @@ public class ChunkMainConverter {
     public static ChunkMain toChunkMain(String chunkmainjsonstring){
         try{
             JSONObject object = new JSONObject(chunkmainjsonstring);
-            return OpenWeatherJsonUtils.getChunkMainFromJsonObject(object);
+            return OpenWeatherJsonUtils.getChunkMainFromWeatherEntry(object);
         } catch(JSONException e){
             Log.e(TAG, e.toString());
             return null;

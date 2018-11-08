@@ -1,6 +1,9 @@
 package com.example.android.model;
 
-public class ChunkMain {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class ChunkMain implements Parcelable {
     private double mMainTemp;
     private double mMinTemp;
     private double mMaxTemp;
@@ -9,7 +12,6 @@ public class ChunkMain {
     private double mGroundLevel;
     private double mHumidity;
     private double mTempKF;
-
 
     public ChunkMain (double mainTemp, double minTemp, double maxTemp, double pressure, double seaLevel, double groundLevel, double humidity, double tempKF){
         mMainTemp = mainTemp;
@@ -20,6 +22,41 @@ public class ChunkMain {
         mGroundLevel = groundLevel;
         mHumidity = humidity;
         mTempKF = tempKF;
+    }
+
+    protected ChunkMain(Parcel in) {
+        mMainTemp = in.readDouble();
+        mMinTemp = in.readDouble();
+        mMaxTemp = in.readDouble();
+        mPressure = in.readDouble();
+        mSeaLevel = in.readDouble();
+        mGroundLevel = in.readDouble();
+        mHumidity = in.readDouble();
+        mTempKF = in.readDouble();
+    }
+
+    public static final Creator<ChunkMain> CREATOR = new Creator<ChunkMain>() {
+        @Override
+        public ChunkMain createFromParcel(Parcel in) {
+            return new ChunkMain(in);
+        }
+
+        @Override
+        public ChunkMain[] newArray(int size) {
+            return new ChunkMain[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(mMainTemp);
+        dest.writeDouble(mMinTemp);
+        dest.writeDouble(mMaxTemp);
+        dest.writeDouble(mPressure);
+        dest.writeDouble(mSeaLevel);
+        dest.writeDouble(mGroundLevel);
+        dest.writeDouble(mHumidity);
+        dest.writeDouble(mTempKF);
     }
 
 
@@ -86,5 +123,12 @@ public class ChunkMain {
     public void setmTempKF(double mTempKF) {
         this.mTempKF = mTempKF;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
 }
 

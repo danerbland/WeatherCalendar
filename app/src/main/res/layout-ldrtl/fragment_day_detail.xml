@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".DayDetailFragment">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+                <FrameLayout
+                    android:id="@+id/framelayout_day_detail_forecast_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent">
+                <TextView
+                    android:id="@+id/textview_day_detail_forecast_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_gravity="start|center_vertical"
+                    android:text="@string/forecast_label"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:contentDescription="@string/show_forecast_indicator_content_description"
+                        android:id="@+id/imageview_day_detail_show_forecast_indicator"
+                        android:layout_width="38dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:src="@android:drawable/arrow_down_float" />
+                </FrameLayout>
+
+
+                <TextView
+                    android:id="@+id/textview_no_forecast_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_forecast_message"
+                    android:textSize="20sp"
+                    android:fontFamily="sans-serif-light"
+                    app:layout_constraintTop_toBottomOf="@id/framelayout_day_detail_forecast_label"
+                    android:visibility="gone"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recyclerview_day_detail_forecast"
+                    app:layout_constraintTop_toBottomOf="@id/framelayout_day_detail_forecast_label"/>
+
+            <FrameLayout
+                android:id="@+id/framelayout_day_detail_events_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/recyclerview_day_detail_forecast">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textview_day_detail_events_label"
+                    android:textStyle="bold"
+                    android:textSize="32sp"
+                    android:text="@string/events_label"
+                    android:layout_gravity="start|center_vertical"
+                    app:layout_constraintTop_toBottomOf="@id/recyclerview_day_detail_forecast"/>
+
+                <ImageView
+                    android:contentDescription="@string/show_events_indicator_content_description"
+                    android:id="@+id/imageview_day_detail_show_events_indicator"
+                    android:layout_width="38dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:src="@android:drawable/arrow_down_float" />
+
+            </FrameLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recyclerview_day_detail_events"
+                    app:layout_constraintTop_toBottomOf="@id/framelayout_day_detail_events_label"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textview_no_events_message"
+                    android:text="@string/no_events_message"
+                    android:textSize="20sp"
+                    android:fontFamily="sans-serif-light"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/framelayout_day_detail_events_label"/>
+
+
+        </LinearLayout>
+</ScrollView>

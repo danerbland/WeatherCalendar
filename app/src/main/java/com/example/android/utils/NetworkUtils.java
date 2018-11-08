@@ -1,7 +1,6 @@
 package com.example.android.utils;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.util.Log;
 

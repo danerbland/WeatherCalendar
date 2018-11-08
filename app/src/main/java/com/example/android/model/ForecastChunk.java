@@ -1,6 +1,9 @@
 package com.example.android.model;
 
-public class ForecastChunk {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class ForecastChunk implements Parcelable{
     private long mDate;
     private ChunkMain mChunkMain;
     private ChunkWeather mChunkWeather;
@@ -18,6 +21,41 @@ public class ForecastChunk {
         this.mChunkWind = mChunkWind;
         this.mSysPod = mSysPod;
         this.mDateText = mDateText;
+    }
+
+
+    protected ForecastChunk(Parcel in) {
+        mDate = in.readLong();
+        mChunkMain = in.readParcelable(ChunkMain.class.getClassLoader());
+        mChunkWeather = in.readParcelable(ChunkWeather.class.getClassLoader());
+        mClouds = in.readInt();
+        mChunkWind = in.readParcelable(ChunkWind.class.getClassLoader());
+        mSysPod = in.readString();
+        mDateText = in.readString();
+    }
+
+    public static final Creator<ForecastChunk> CREATOR = new Creator<ForecastChunk>() {
+        @Override
+        public ForecastChunk createFromParcel(Parcel in) {
+            return new ForecastChunk(in);
+        }
+
+        @Override
+        public ForecastChunk[] newArray(int size) {
+            return new ForecastChunk[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(mDate);
+        dest.writeParcelable(mChunkMain, flags);
+        dest.writeParcelable(mChunkWeather, flags);
+        dest.writeInt(mClouds);
+        dest.writeParcelable(mChunkWind, flags);
+        dest.writeString(mSysPod);
+        dest.writeString(mDateText);
+
     }
 
 
@@ -76,4 +114,11 @@ public class ForecastChunk {
     public void setmChunkMain(ChunkMain mChunkMain) {
         this.mChunkMain = mChunkMain;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
 }

@@ -1,17 +1,18 @@
 package com.example.android.utils;
 
+
 import android.util.Log;
 
 import com.example.android.model.ChunkMain;
 import com.example.android.model.ChunkWeather;
 import com.example.android.model.ChunkWind;
 import com.example.android.model.ForecastChunk;
+import com.example.android.weathercalendar.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 //A UTILITY FOR EXTRACTING JAVA OBJECTS FROM JSON.
@@ -141,6 +142,78 @@ public class OpenWeatherJsonUtils {
                 object.getDouble(JSON_WIND_DIRECTION_KEY)
         );
         return chunkWind;
+    }
+
+    public static ChunkWind getChunkWindFromWeatherEntry (JSONObject object) throws JSONException {
+        ChunkWind chunkWind = new ChunkWind(
+                object.getDouble("mSpeed"),
+                object.getDouble("mDirection"));
+        return chunkWind;
+    }
+
+    public static ChunkWeather getChunkWeatherFromWeatherEntry (JSONArray array) throws JSONException {
+        JSONObject chunkWeatherObject = array.getJSONObject(0);
+        ChunkWeather chunkWeather = new ChunkWeather(
+                chunkWeatherObject.getInt("mId"),
+                chunkWeatherObject.getString("mMain"),
+                chunkWeatherObject.getString("mDescription"),
+                chunkWeatherObject.getString("mIcon")
+        );
+        return chunkWeather;
+    }
+
+    public static ChunkMain getChunkMainFromWeatherEntry(JSONObject object) throws JSONException{
+        ChunkMain chunkMain = new ChunkMain(
+                object.getDouble("mMainTemp"),
+                object.getDouble("mMinTemp"),
+                object.getDouble("mMaxTemp"),
+                object.getDouble("mPressure"),
+                object.getDouble("mSeaLevel"),
+                object.getDouble("mGroundLevel"),
+                object.getDouble("mHumidity"),
+                object.getDouble("mTempKF")
+        );
+        return chunkMain;
+    }
+
+    public static int getDrawableIdFromWeatherCode(int weatherCode){
+        if(weatherCode >= 800) {
+            switch (weatherCode) {
+                case 800:
+                    return R.drawable.art_clear;
+                case 801:
+                    return R.drawable.art_light_clouds;
+                case 802:
+                    return R.drawable.art_light_clouds;
+                case 803:
+                    return R.drawable.art_clouds;
+                case 804:
+                    return R.drawable.art_clouds;
+                default:
+                    return -1;
+            }
+        }
+
+        switch (weatherCode/100){
+            case 2:
+                return R.drawable.art_storm;
+            case 3:
+                return R.drawable.art_light_rain;
+            case 5:
+                return R.drawable.art_rain;
+            case 6:
+                return R.drawable.art_snow;
+            default:
+                return -1;
+        }
+    }
+
+    public static int convertToFahrenheit(Double temp){
+        return (int) Math.round(((temp - Double.valueOf(273.15)) * Double.valueOf(1.8)) + Double.valueOf(32));
+    }
+
+    public static int convertToCelcius(Double temp){
+        return (int) Math.round(temp - 273.15);
     }
 
 
