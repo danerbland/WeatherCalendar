@@ -35,6 +35,8 @@ public class WeatherCalendarWidget extends AppWidgetProvider {
                                 int appWidgetId, int imageResourceId, String eventDescription, long eventTimeInMillis,
                                 ArrayList<ForecastChunk> forecastChunks, String weatherDescription, String weatherTemp) {
 
+        Log.d(TAG, "updateAppWidget Fired!  Weather Description: " + weatherDescription + " appWidgetId: " + appWidgetId);
+
         String eventDateAndTime;
         Calendar calendar = Calendar.getInstance();
 
@@ -88,6 +90,7 @@ public class WeatherCalendarWidget extends AppWidgetProvider {
         final long dayInMillis = 1000 * 60 * 60 * 24;
         final long threeHoursInMillis = 10800000L;
         final long oneAndAHalfHoursInMillis = threeHoursInMillis/2;
+
         Calendar monthFromToday = Calendar.getInstance();
         monthFromToday.setTimeInMillis((today.getTimeInMillis() + monthInMillis));
         final Cursor cursor = CalendarUtils.queryEventsFromEventTable(context.getApplicationContext(), today.getTimeInMillis(), monthFromToday.getTimeInMillis());
@@ -115,10 +118,13 @@ public class WeatherCalendarWidget extends AppWidgetProvider {
                     List<WeatherEntry> weatherEntries = mDb.weatherDao().loadWeatherEntryList();
                     ArrayList<ForecastChunk> mForecastChunks = new ArrayList<>();
 
+                    boolean hasBeenUpdated = false;
+
                     //If we have weather data
                     if(weatherEntries.size()>0){
                         //Look through the weather data to find the forecast chunk closest to the event.
                         // It must be within 3 hours.
+
                         for(WeatherEntry entry: weatherEntries){
                             ForecastChunk chunk;
                             //If there is any weather data within 3 hours of our event's start time.
@@ -135,6 +141,7 @@ public class WeatherCalendarWidget extends AppWidgetProvider {
                         }
                         for(ForecastChunk chunk:mForecastChunks){
 
+
                             if(Math.abs((chunk.getmDate() * 1000L) - cursor.getLong(cursor.getColumnIndex(CalendarContract.Events.DTSTART))) <= oneAndAHalfHoursInMillis){
 
                                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
@@ -144,7 +151,6 @@ public class WeatherCalendarWidget extends AppWidgetProvider {
                                 } else{
                                     tempString = OpenWeatherJsonUtils.convertToCelcius(chunk.getmChunkMain().getmMainTemp()) + "°";
                                 }
-
                                 updateWidgets(context, appWidgetManager,
                                         OpenWeatherJsonUtils.getDrawableIdFromWeatherCode(chunk.getmChunkWeather().getmId()),
                                         eventTitle,
@@ -154,7 +160,20 @@ public class WeatherCalendarWidget extends AppWidgetProvider {
                                         tempString,
                                         appWidgetIds
                                 );
+                                hasBeenUpdated = true;
                             }
+                        }
+                        //If it hasn't been updated by now, then we had no forecast for the event.
+                        if(!hasBeenUpdated){
+                            updateWidgets(context, appWidgetManager,
+                                    -1,
+                                    eventTitle,
+                                    cursor.getLong(cursor.getColumnIndex(CalendarContract.Events.DTSTART)),
+                                    mForecastChunks,
+                                    "",
+                                    "",
+                                    appWidgetIds
+                            );
                         }
                     }//end If we have weather data
                     else {
@@ -183,7 +202,7 @@ public class WeatherCalendarWidget extends AppWidgetProvider {
     }
 
     public static void updateWidgets(Context context, AppWidgetManager appWidgetManager,
-                                          int imgRes, String eventDescription, long eventTimeInMillis, ArrayList<ForecastChunk> forecastChunks, String weatherDescription, String weatherTemp, int[] appWidgetIds) {
+                                     int imgRes, String eventDescription, long eventTimeInMillis, ArrayList<ForecastChunk> forecastChunks, String weatherDescription, String weatherTemp, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId, imgRes, eventDescription, eventTimeInMillis, forecastChunks, weatherDescription, weatherTemp);
         }

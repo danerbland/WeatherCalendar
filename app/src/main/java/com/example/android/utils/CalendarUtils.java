@@ -240,7 +240,7 @@ public class CalendarUtils {
                 + CalendarContract.Events.DTSTART + " <= ?))";
         String[] selectionArgs = new String[]{Long.toString(dtStart), Long.toString(dtEnd)};
 
-        cur = cr.query(uri, mProjection, selection, selectionArgs, null);
+        cur = cr.query(uri, mProjection, selection, selectionArgs, CalendarContract.Events.DTSTART);
         return cur;
     }
 
